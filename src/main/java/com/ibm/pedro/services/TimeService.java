@@ -1,14 +1,16 @@
-package com.example.demo.model;
+package com.ibm.pedro.services;
+
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-// está no model temporariamente, não é o local apropriado
-// substitua seu arquivo por essa classe
-public class OrganizarTime {
 
-    public static Map<String, List<String>> organizarTimes(List<String> jogadores) {
+@Service
+public class TimeService {
+
+    public Map<String, List<String>> organizarTimes(List<String> jogadores) {
         Map<String, List<String>> times = new HashMap<>();
 
         jogadores.stream()
@@ -22,7 +24,7 @@ public class OrganizarTime {
         return times;
     }
 
-    private static boolean sobrenomeJaExiste(Map<String, List<String>> times, String sobrenome) {
+    private boolean sobrenomeJaExiste(Map<String, List<String>> times, String sobrenome) {
         return times.values().stream()
                 .flatMap(List::stream)
                 .map(j -> j.split(" ")[1])
