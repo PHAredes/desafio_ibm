@@ -17,7 +17,7 @@ public class AceitacaoTest {
 		
 		
         // Caso de teste 1: Nenhum jogador
-        List<String> jogadores1 = Arrays.asList();
+        List<String> jogadores1 = List.of();
         Map<String, List<String>> times1 = solucao.organizarTimes(jogadores1);
         assertEquals(0, times1.size(), "Caso de teste 1: Nenhum jogador");
 

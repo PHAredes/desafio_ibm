@@ -1,5 +1,7 @@
 package com.ibm.pedro.services;
 
+import com.ibm.pedro.repositories.TimeRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -9,6 +11,9 @@ import java.util.Map;
 
 @Service
 public class TimeService {
+
+    @Autowired
+    TimeRepository timeRepository;
 
     public Map<String, List<String>> organizarTimes(List<String> jogadores) {
         Map<String, List<String>> times = new HashMap<>();
