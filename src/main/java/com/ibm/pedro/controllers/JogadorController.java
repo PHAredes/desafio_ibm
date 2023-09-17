@@ -12,4 +12,5 @@ public class JogadorController {
     @Autowired
     JogadorRepository jogadorRepository;
 
+
 }
