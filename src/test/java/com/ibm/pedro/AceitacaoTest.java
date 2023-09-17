@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.ibm.pedro;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -6,14 +6,14 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import com.example.demo.model.OrganizarTime; // importe a sua classe
+import com.ibm.pedro.services.TimeService;
 import org.junit.jupiter.api.Test;
 
 public class AceitacaoTest {
 
 	@Test
     public void testOrganizarTimes() {
-		var solucao = new OrganizarTime(); // troque pela sua classe
+		var solucao = new TimeService(); // troque pela sua classe
 		
 		
         // Caso de teste 1: Nenhum jogador
