@@ -6,6 +6,7 @@ import com.ibm.pedro.services.TimeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 
 @RestController
@@ -20,7 +21,8 @@ public class JogadorController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void inserirJogador(@RequestBody JogadorEntity jogadorEntity) {
-        if(jogadorService.nomeJogadorInvalido(jogadorEntity)) return;
+        if(jogadorService.nomeJogadorInvalido(jogadorEntity))
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Nome do jogador fora dos padrões esperados");
 
         timeService.organizarJogadorEmTime(jogadorEntity);
         jogadorService.inserirOuAtualizarJogador(jogadorEntity);
