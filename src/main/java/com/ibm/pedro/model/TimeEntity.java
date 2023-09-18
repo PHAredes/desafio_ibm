@@ -17,7 +17,7 @@ public class TimeEntity {
     private Long id;
 
     @Column(nullable = false)
-    private String name;
+    private String nome;
 
     @OneToMany(cascade = ALL, mappedBy = "time")
     private List<JogadorEntity> jogadores;

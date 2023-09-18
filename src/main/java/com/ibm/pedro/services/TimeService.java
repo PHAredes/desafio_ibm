@@ -1,8 +1,10 @@
 package com.ibm.pedro.services;
 
+import com.ibm.pedro.model.TimeEntity;
 import com.ibm.pedro.repositories.TimeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,6 +16,12 @@ public class TimeService {
 
     @Autowired
     TimeRepository timeRepository;
+
+    @GetMapping
+    public List<TimeEntity> buscarTime(){
+        return timeRepository.findAll();
+
+    }
 
     public Map<String, List<String>> organizarTimes(List<String> jogadores) {
         Map<String, List<String>> times = new HashMap<>();

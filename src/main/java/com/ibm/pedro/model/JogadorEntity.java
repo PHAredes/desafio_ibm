@@ -3,8 +3,6 @@ package com.ibm.pedro.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import static jakarta.persistence.CascadeType.ALL;
-
 @Data
 @Entity(name = "jogador")
 public class JogadorEntity {
@@ -14,7 +12,7 @@ public class JogadorEntity {
     private Long id;
 
     @Column(nullable = false)
-    private String name;
+    private String nome;
 
     @ManyToOne
     @JoinColumn(name = "time_id")
