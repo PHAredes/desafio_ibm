@@ -5,6 +5,7 @@ import com.ibm.pedro.repositories.JogadorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 @Service
 public class JogadorService {
 
@@ -14,8 +15,11 @@ public class JogadorService {
     public void inserirOuAtualizarJogador(JogadorEntity jogadorEntity) {
         jogadorRepository.save(jogadorEntity);
     }
-
     public void excluirTodosJogadores() {
         jogadorRepository.deleteAll();
+    }
+
+    public boolean nomeJogadorInvalido(JogadorEntity jogadorEntity) {
+        return jogadorEntity.getNome().split(" ").length != 2;
     }
 }

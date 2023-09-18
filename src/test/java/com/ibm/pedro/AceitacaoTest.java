@@ -14,8 +14,7 @@ public class AceitacaoTest {
 	@Test
     public void testOrganizarTimes() {
 		var solucao = new TimeService(); // troque pela sua classe
-		
-		
+
         // Caso de teste 1: Nenhum jogador
         List<String> jogadores1 = List.of();
         Map<String, List<String>> times1 = solucao.organizarTimes(jogadores1);

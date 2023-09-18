@@ -1,15 +1,12 @@
 package com.ibm.pedro.services;
 
+import com.ibm.pedro.model.JogadorEntity;
 import com.ibm.pedro.model.TimeEntity;
 import com.ibm.pedro.repositories.TimeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class TimeService {
@@ -17,10 +14,19 @@ public class TimeService {
     @Autowired
     TimeRepository timeRepository;
 
-    @GetMapping
-    public List<TimeEntity> buscarTime(){
-        return timeRepository.findAll();
+    public List<TimeEntity> buscarTimes(){
+        System.out.println("tentou buscar");
+        List<TimeEntity> listaTeste = timeRepository.findAll();
+        System.out.printf("Times encontrados: {}", listaTeste.size());
+        return listaTeste;
 
+    }
+
+    public void organizarJogadorEmTime(JogadorEntity jogador) {
+        TimeEntity novoTime = new TimeEntity();
+        novoTime.setNome(jogador.getNome());
+        timeRepository.save(novoTime);
+        jogador.setTime(novoTime);
     }
 
     public Map<String, List<String>> organizarTimes(List<String> jogadores) {

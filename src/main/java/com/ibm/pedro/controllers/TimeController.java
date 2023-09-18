@@ -18,6 +18,10 @@ public class TimeController {
 
     @GetMapping
     public List<TimeEntity> buscarTime() {
-        return timeService.buscarTime();
+        System.out.println("iniciando busca");
+        List<TimeEntity> times = timeService.buscarTimes();
+        System.out.printf("Times encontrados: {}", times.size());
+        return times;
     }
+    
 }

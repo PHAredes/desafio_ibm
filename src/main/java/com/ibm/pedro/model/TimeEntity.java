@@ -1,6 +1,7 @@
 package com.ibm.pedro.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -19,6 +20,7 @@ public class TimeEntity {
     @Column(nullable = false)
     private String nome;
 
+    @JsonIgnore // impedir recursão infinita ao fazer uma busca
     @OneToMany(cascade = ALL, mappedBy = "time")
     private List<JogadorEntity> jogadores;
 
