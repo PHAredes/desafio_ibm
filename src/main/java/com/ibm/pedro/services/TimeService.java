@@ -53,6 +53,10 @@ public class TimeService {
         }
     }
 
+    public void excluirTodosTimes() {
+        timeRepository.deleteAll();
+    }
+
     private Optional<TimeEntity> encontreTimeExistenteComSobrenome(String sobrenome) {
         List<JogadorEntity> jogadores = jogadorRepository.findAll();
 
