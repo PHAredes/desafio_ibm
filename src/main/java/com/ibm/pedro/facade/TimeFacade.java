@@ -1,20 +1,18 @@
-package com.ibm.pedro.controllers;
+package com.ibm.pedro.facade;
 
 import com.ibm.pedro.dto.TimeDTO;
 import com.ibm.pedro.model.JogadorEntity;
 import com.ibm.pedro.services.TimeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Controller
-public class TimeController {
+@Service
+public class TimeFacade {
 
     @Autowired
     TimeService timeService;
