@@ -2,10 +2,11 @@
 
 Este é um projeto de desafio de código que implementa uma API para organizar jogadores em times. 
 Os times são formados de acordo com a inicial do sobrenome dos jogadores, sem repetir jogadores com mesmo sobrenome no time.
-A API só aceita nomes no formato { "nome" : "nome sobrenome"}, e é case sensitive.
+A API só aceita nomes no formato { "nome" : "nome sobrenome"} inseridos um a um e é case sensitive.
 
-. A API oferece três endpoints:
+---
 
+A API oferece três endpoints:
 
 ### POST /jogador
 
