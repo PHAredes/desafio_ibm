@@ -4,12 +4,15 @@ package com.ibm.pedro.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static jakarta.persistence.CascadeType.ALL;
 
 @Data
+@NoArgsConstructor
 @Entity(name = "time")
 public class TimeEntity {
     
@@ -22,6 +25,7 @@ public class TimeEntity {
 
     @JsonIgnore // impedir recursão infinita ao fazer uma busca
     @OneToMany(cascade = ALL, mappedBy = "time")
-    private List<JogadorEntity> jogadores;
+    private List<JogadorEntity> jogadores = new ArrayList<>();
+
 
 }

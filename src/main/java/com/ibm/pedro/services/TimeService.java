@@ -8,17 +8,19 @@ import com.ibm.pedro.repositories.TimeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 public class TimeService {
 
     @Autowired
-    TimeRepository timeRepository;
+    private TimeRepository timeRepository;
 
     @Autowired
-    JogadorRepository jogadorRepository;
+    private JogadorRepository jogadorRepository;
 
     public List<TimeDTO> buscarTimes() {
         List<TimeEntity> times = timeRepository.findAll();
@@ -38,32 +40,32 @@ public class TimeService {
 
     public void organizarJogadorEmTime(JogadorEntity jogador) {
         String sobrenome = jogador.getNome().split(" ")[1];
-        TimeEntity timeExistente = encontreTimeExistenteComSobrenome(sobrenome);
+        Optional<TimeEntity> timeExistente = encontreTimeExistenteComSobrenome(sobrenome);
 
-        if (timeExistente != null) {
-            jogador.setTime(timeExistente); // Associe o jogador ao time existente
+        if (timeExistente.isPresent()) {
+            jogador.setTime(timeExistente.get());
         } else {
             TimeEntity novoTime = criarNovoTime(sobrenome.substring(0, 1));
+            jogador.setTime(novoTime); // Associe o jogador ao novo time antes de salvar
+            jogadorRepository.save(jogador);
+            novoTime.getJogadores().add(jogador); // Adicione o jogador ao novo time
             timeRepository.save(novoTime);
-            jogador.setTime(novoTime); // Associe o jogador ao novo time
         }
-
-        jogadorRepository.save(jogador);
     }
 
-    private TimeEntity encontreTimeExistenteComSobrenome(String sobrenome) {
+    private Optional<TimeEntity> encontreTimeExistenteComSobrenome(String sobrenome) {
         List<JogadorEntity> jogadores = jogadorRepository.findAll();
 
         for (JogadorEntity jogador : jogadores) {
             String jogadorSobrenome = jogador.getNome().split(" ")[1];
             if (jogadorSobrenome.equals(sobrenome)) {
-                return criarNovoTime(sobrenome); // Cria um novo time se o sobrenome for igual
+                return Optional.of(criarNovoTime(sobrenome));
             } else if (jogadorSobrenome.startsWith(sobrenome.substring(0, 1))) {
-                return jogador.getTime(); // Retorna o time se a primeira letra do sobrenome for igual
+                return Optional.of(jogador.getTime());
             }
         }
 
-        return null;
+        return Optional.empty();
     }
 
     private TimeEntity criarNovoTime(String nomeTime) {
