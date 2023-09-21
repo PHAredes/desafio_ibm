@@ -5,14 +5,17 @@ import com.ibm.pedro.model.JogadorEntity;
 import com.ibm.pedro.model.TimeEntity;
 import com.ibm.pedro.repositories.JogadorRepository;
 import com.ibm.pedro.repositories.TimeRepository;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Data
+@AllArgsConstructor
 @Service
 public class TimeService {
 
@@ -22,39 +25,36 @@ public class TimeService {
     @Autowired
     private JogadorRepository jogadorRepository;
 
+
     public List<TimeDTO> buscarTimes() {
-        List<TimeEntity> times = timeRepository.findAll();
-        List<TimeDTO> timesDTO = new ArrayList<>();
-
-        for (TimeEntity time : times) {
-            List<String> nomesJogadores = time.getJogadores().stream()
-                    .map(JogadorEntity::getNome)
-                    .collect(Collectors.toList());
-
-            TimeDTO timeDTO = new TimeDTO("Time " + time.getId(), nomesJogadores);
-            timesDTO.add(timeDTO);
-        }
-
-        return timesDTO;
+        return timeRepository.findAll().stream()
+                .map(time -> new TimeDTO("Time " + time.getId(),
+                        time.getJogadores().stream()
+                                .map(JogadorEntity::getNome)
+                                .collect(Collectors.toList())))
+                .collect(Collectors.toList());
     }
 
     public void organizarJogadorEmTime(JogadorEntity jogador) {
         String sobrenome = jogador.getNome().split(" ")[1];
-        Optional<TimeEntity> timeExistente = encontreTimeExistenteComSobrenome(sobrenome);
 
-        if (timeExistente.isPresent()) {
-            jogador.setTime(timeExistente.get());
-        } else {
+        jogador.setTime(encontreTimeExistenteComSobrenome(sobrenome).orElseGet(() -> {
             TimeEntity novoTime = criarNovoTime(sobrenome.substring(0, 1));
-            jogador.setTime(novoTime); // Associe o jogador ao novo time antes de salvar
-            jogadorRepository.save(jogador);
             novoTime.getJogadores().add(jogador); // Adicione o jogador ao novo time
-            timeRepository.save(novoTime);
-        }
+            jogadorRepository.save(jogador); // Associe o jogador ao novo time antes de salvar
+            return timeRepository.save(novoTime);
+        }));
     }
+
 
     public void excluirTodosTimes() {
         timeRepository.deleteAll();
+    }
+
+    private TimeEntity criarNovoTime(String nomeTime) {
+        TimeEntity novoTime = new TimeEntity();
+        novoTime.setNome(nomeTime);
+        return timeRepository.save(novoTime);
     }
 
     private Optional<TimeEntity> encontreTimeExistenteComSobrenome(String sobrenome) {
@@ -72,9 +72,4 @@ public class TimeService {
         return Optional.empty();
     }
 
-    private TimeEntity criarNovoTime(String nomeTime) {
-        TimeEntity novoTime = new TimeEntity();
-        novoTime.setNome(nomeTime);
-        return timeRepository.save(novoTime);
-    }
 }
