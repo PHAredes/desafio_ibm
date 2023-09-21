@@ -18,8 +18,7 @@ public class JogadorService {
     public void excluirTodosJogadores() {
         jogadorRepository.deleteAll();
     }
-
-    public boolean nomeJogadorInvalido(JogadorEntity jogadorEntity) {
-        return jogadorEntity.getNome().split(" ").length != 2;
+    public boolean nomeJogadorValido(JogadorEntity jogadorEntity) {
+        return (jogadorEntity.getNome().split(" ").length) == 2;
     }
 }

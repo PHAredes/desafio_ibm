@@ -21,7 +21,7 @@ public class JogadorFacade {
         jogadorService.excluirTodosJogadores();
     }
 
-    public boolean validarNome(JogadorEntity jogadorEntity) {
-        return jogadorService.nomeJogadorInvalido(jogadorEntity);
+    public boolean nomeJogadorValido(JogadorEntity jogadorEntity) {
+        return jogadorService.nomeJogadorValido(jogadorEntity);
     }
 }

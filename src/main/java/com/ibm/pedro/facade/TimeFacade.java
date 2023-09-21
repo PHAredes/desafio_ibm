@@ -17,15 +17,8 @@ public class TimeFacade {
     @Autowired
     TimeService timeService;
 
-    public Map<String, List<String>> buscarTimes() {
-        List<TimeDTO> times = timeService.buscarTimes();
-        Map<String, List<String>> timeMap = new HashMap<>();
-
-        for (TimeDTO time : times) {
-            timeMap.put(time.getNome(), time.getJogadores());
-        }
-
-        return timeMap;
+    public List<TimeDTO> buscarTimes() {
+        return timeService.buscarTimes();
     }
     public void organizarJogadorEmTime(JogadorEntity jogadorEntity) {
         timeService.organizarJogadorEmTime(jogadorEntity);

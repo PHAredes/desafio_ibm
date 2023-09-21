@@ -5,10 +5,5 @@ import lombok.Data;
 
 import java.util.List;
 
-@Data
-@AllArgsConstructor
-public class TimeDTO {
-    private String nome;
-    private List<String> jogadores;
-
+public record TimeDTO(String nome, List<String> jogadores) {
 }
